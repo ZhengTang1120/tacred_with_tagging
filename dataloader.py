@@ -10,6 +10,7 @@ class DataLoader(object):
         self.intervals = intervals
         self.patterns = patterns
         self.tokenizer = tokenizer 
+        self.label2id = constant.LABEL_TO_ID
 
         data = self.preprocess()
         return data
