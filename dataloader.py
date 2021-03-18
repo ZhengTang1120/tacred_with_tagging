@@ -10,6 +10,9 @@ class DataLoader(object):
         self.intervals = intervals
         self.patterns = patterns
         self.tokenizer = tokenizer 
+
+        data = self.preprocess()
+        return data
     
     def preprocess(self):
         processed = []
