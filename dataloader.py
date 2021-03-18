@@ -86,12 +86,13 @@ class DataLoader(object):
             #     tagging = [1 if i !=0 else 0 for i in range(len(tokens))]
             else:
                 tagging = [0 for i in range(len(tokens))]
-            print (pattern)
-            print ([(tokens[i], ner[i], tagging[i], subj_positions[i], obj_positions[i]) for i in range(l)])
+            if has_tag:
+                print (pattern)
+                print ([(tokens[i], ner[i], tagging[i], subj_positions[i], obj_positions[i]) for i in range(l)])
             tokens = self.tokenizer.convert_tokens_to_ids(tokens)
             subj_type = [constant.SUBJ_NER_TO_ID[d['subj_type']]]
             obj_type = [constant.OBJ_NER_TO_ID[d['obj_type']]]
-            processed += [(tokens, subj_positions, obj_positions, relation, tagging, has_tag)]
+            processed += [(tokens, subj_positions, obj_positionsg, relation, tagging, has_tag)]
         return processed
 
 def get_positions(start_idx, end_idx, length):
