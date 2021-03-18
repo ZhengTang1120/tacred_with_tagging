@@ -24,7 +24,7 @@ class DataLoader(object):
         for c, d in enumerate(json.load(open(self.filename))):
             tokens = list(d['token'])
             tokens = [t.lower() for t in tokens]
-            ner = d['stanford_ner'], constant.NER_TO_ID
+            ner = d['stanford_ner']
             relation = self.label2id[d['relation']]
 
             # anonymize tokens
