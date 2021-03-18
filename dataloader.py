@@ -77,6 +77,7 @@ class DataLoader(object):
                 ner.insert(se+2, '#')
             tokens = ['[CLS]'] + tokens
             ner = ['[CLS]'] + ner
+            l = len(tokens)
             subj_positions = get_positions(ss+2, se+2, l)
             obj_positions = get_positions(os+2, oe+2, l)
             if has_tag and relation!=0:
@@ -85,7 +86,6 @@ class DataLoader(object):
             #     tagging = [1 if i !=0 else 0 for i in range(len(tokens))]
             else:
                 tagging = [0 for i in range(len(tokens))]
-            l = len(tokens)
             print ([(tokens[i], ner[i], tagging[i]) for i in range(l)])
             tokens = self.tokenizer.convert_tokens_to_ids(tokens)
             subj_type = [constant.SUBJ_NER_TO_ID[d['subj_type']]]
