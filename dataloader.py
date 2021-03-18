@@ -13,8 +13,7 @@ class DataLoader(object):
         self.tokenizer = tokenizer 
         self.label2id = constant.LABEL_TO_ID
 
-        data = self.preprocess()
-        return data
+        self.data = self.preprocess()
     
     def preprocess(self):
         processed = []
@@ -36,7 +35,7 @@ class DataLoader(object):
             rl, masked = intervals[c].split('\t')
             rl, pattern = patterns[c].split('\t')
             masked = eval(masked)
-            if masked and d['relation'] != 'no_relation':
+            if masked and relation!=0:
                 masked = list(range(masked[0], masked[1]))
                 for i in range(len(masked)):
                     if masked[i] < min(os, ss):
@@ -87,13 +86,10 @@ class DataLoader(object):
             #     tagging = [1 if i !=0 else 0 for i in range(len(tokens))]
             else:
                 tagging = [0 for i in range(len(tokens))]
-            if has_tag:
-                print (pattern)
-                print ([(tokens[i], ner[i], tagging[i], subj_positions[i], obj_positions[i]) for i in range(l)])
             tokens = self.tokenizer.convert_tokens_to_ids(tokens)
             subj_type = [constant.SUBJ_NER_TO_ID[d['subj_type']]]
             obj_type = [constant.OBJ_NER_TO_ID[d['obj_type']]]
-            processed += [(tokens, subj_positions, obj_positions, relation, tagging, has_tag)]
+            processed += [(tokens, torch.LongTensor(subj_positions), torch.LongTensor(obj_positions), torch.LongTensor([relation-1]), torch.FloatTensor(tagging), has_tag)]
         return processed
 
 def get_positions(start_idx, end_idx, length):
