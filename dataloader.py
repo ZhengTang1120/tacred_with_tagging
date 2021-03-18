@@ -1,5 +1,6 @@
 import json
 import constant
+import string
 
 class DataLoader(object):
     """
